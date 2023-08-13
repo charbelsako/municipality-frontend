@@ -12,9 +12,9 @@ function App() {
     <div className='App'>
       <Routes>
         <Route path='/' element={<Layout />}>
-          <Route path='/login' element={<Login />}></Route>
+          <Route path='login' element={<Login />}></Route>
           <Route element={<RequireAuth />}>
-            <Route path='/protected' element={<Protected />}></Route>
+            <Route path='protected' element={<Protected />}></Route>
           </Route>
         </Route>
       </Routes>
