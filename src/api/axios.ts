@@ -1,5 +1,6 @@
 import axios from 'axios';
-
+import env from 'react-dotenv';
+console.log(env);
 export default axios.create({
-  baseURL: process.env.BASE_URL || 'http://localhost:5000',
+  baseURL: env.BASE_URL,
 });
