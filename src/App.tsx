@@ -6,6 +6,7 @@ import Protected from './components/Protected';
 import RequireAuth from './components/RequireAuth';
 import Unauthorized from './components/Unauthorized';
 import Home from './components/Home';
+import CreateStatement from './components/CreateStatement';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                 />
               }
             >
+              {/* This will be the dashboard of all roles */}
               <Route path='/' element={<Home />} />
             </Route>
 
@@ -37,9 +39,11 @@ function App() {
             </Route>
 
             {/* all the routes allowed for citizen role */}
-            <Route element={<RequireAuth allowedRoles={['Citizen']} />}>
-              {/* <Route path='create-statement' element={<CreateStatement />} /> */}
-            </Route>
+            {/* <Route
+              element={<RequireAuth allowedRoles={['Citizen', 'Admin']} />}
+            > */}
+            <Route path='create-statement' element={<CreateStatement />} />
+            {/* </Route> */}
           </Route>
           <Route path='/unauthorized' element={<Unauthorized />} />
         </Routes>
