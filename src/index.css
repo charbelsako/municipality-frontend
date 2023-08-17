@@ -27,4 +27,7 @@
   .disabled-button {
     @apply bg-gray-200 rounded p-1;
   }
+  /* .link {
+    @apply inline p-2 m-1;
+  } */
 }
