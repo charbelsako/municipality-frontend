@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import AuthContext from '../context/AuthProvider';
 
 export interface IUser {
@@ -32,7 +32,7 @@ export interface IRecordInfo {
 
 function UserProfile() {
   // const [details, setDetails] = useState<IUser>();
-  const { auth, setAuth } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
   // useEffect(() => {
   //   getUserDetails
   // }, [])
