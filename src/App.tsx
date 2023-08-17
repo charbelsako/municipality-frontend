@@ -30,6 +30,7 @@ function App() {
               >
                 {/* This will be the dashboard of all roles */}
                 <Route path='/' element={<Home />} />
+                <Route path='profile' element={<UserProfile />} />
               </Route>
 
               {/* all the routes allowed for super admin role */}
@@ -41,11 +42,10 @@ function App() {
                 />
               </Route>
 
-            {/* all the routes allowed for admin role */}
-            <Route element={<RequireAuth allowedRoles={['Admin']} />}>
-              <Route path='protected' element={<Protected />} />
-              <Route path='profile' element={<UserProfile />} />
-            </Route>
+              {/* all the routes allowed for admin role */}
+              <Route element={<RequireAuth allowedRoles={['Admin']} />}>
+                <Route path='protected' element={<Protected />} />
+              </Route>
 
               {/* all the routes allowed for citizen role */}
               <Route
