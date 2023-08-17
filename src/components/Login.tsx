@@ -71,7 +71,7 @@ export function Login() {
       console.log(response.data.data);
       setAuth({
         email,
-        roles: response.data.data.roles,
+        role: response.data.data.role,
         token: response.data.data.accessToken,
       });
       setEmail('');

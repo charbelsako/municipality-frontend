@@ -4,7 +4,7 @@ import { createContext, useState } from 'react';
 type TokenObject = {
   token: string;
   email?: string;
-  roles?: Array<string>;
+  role?: string;
 };
 
 export type authContextType = {
