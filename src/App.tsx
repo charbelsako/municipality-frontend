@@ -7,6 +7,9 @@ import RequireAuth from './components/RequireAuth';
 import Unauthorized from './components/Unauthorized';
 import Home from './components/Home';
 import CreateStatement from './components/CreateStatement';
+import PersistLogin from './components/PersistLogin';
+import CreateAdmin from './components/CreateAdmin';
+import CreateSuperAdmin from './components/CreateSuperAdmin';
 
 function App() {
   return (
@@ -16,34 +19,39 @@ function App() {
           <Route path='/' element={<Layout />}>
             <Route path='login' element={<Login />} />
 
-            <Route
-              element={
-                <RequireAuth
-                  allowedRoles={['Citizen', 'Admin', 'Super Admin']}
+            <Route element={<PersistLogin />}>
+              <Route
+                element={
+                  <RequireAuth
+                    allowedRoles={['Citizen', 'Admin', 'Super Admin']}
+                  />
+                }
+              >
+                {/* This will be the dashboard of all roles */}
+                <Route path='/' element={<Home />} />
+              </Route>
+
+              {/* all the routes allowed for super admin role */}
+              <Route element={<RequireAuth allowedRoles={['Super Admin']} />}>
+                <Route path='/create-admin' element={<CreateAdmin />} />
+                <Route
+                  path='/create-superadmin'
+                  element={<CreateSuperAdmin />}
                 />
-              }
-            >
-              {/* This will be the dashboard of all roles */}
-              <Route path='/' element={<Home />} />
-            </Route>
+              </Route>
 
-            {/* all the routes allowed for super admin role */}
-            <Route element={<RequireAuth allowedRoles={['Super Admin']} />}>
-              {/* <Route path='/create-admin' element={<CreateAdmin />} /> */}
-              {/* <Route path='/create-superadmin' element={<CreateSuperAdmin />} /> */}
-            </Route>
+              {/* all the routes allowed for admin role */}
+              <Route element={<RequireAuth allowedRoles={['Admin']} />}>
+                <Route path='protected' element={<Protected />} />
+              </Route>
 
-            {/* all the routes allowed for admin role */}
-            <Route element={<RequireAuth allowedRoles={['Admin']} />}>
-              <Route path='protected' element={<Protected />} />
+              {/* all the routes allowed for citizen role */}
+              <Route
+                element={<RequireAuth allowedRoles={['Citizen', 'Admin']} />}
+              >
+                <Route path='create-statement' element={<CreateStatement />} />
+              </Route>
             </Route>
-
-            {/* all the routes allowed for citizen role */}
-            {/* <Route
-              element={<RequireAuth allowedRoles={['Citizen', 'Admin']} />}
-            > */}
-            <Route path='create-statement' element={<CreateStatement />} />
-            {/* </Route> */}
           </Route>
           <Route path='/unauthorized' element={<Unauthorized />} />
         </Routes>

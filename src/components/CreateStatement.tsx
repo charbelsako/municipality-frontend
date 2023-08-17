@@ -1,4 +1,4 @@
-import axios from '../api/axios';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { FormEvent, useState } from 'react';
 
 function CreateStatement() {
@@ -12,6 +12,8 @@ function CreateStatement() {
 
   const [err, setError] = useState<string>();
 
+  const axiosPrivate = useAxiosPrivate();
+
   const createDocument = async (e: FormEvent) => {
     try {
       e.preventDefault();
@@ -24,9 +26,11 @@ function CreateStatement() {
         requestFor,
         notes,
       };
-      const response = await axios.post(
-        '/api/v1/documents/statement-document/create'
+      const response = await axiosPrivate.post(
+        '/api/v1/documents/statement-document/create',
+        data
       );
+      console.log(response);
       setAddress('');
       setPhone('');
       setPropertyNo('');
@@ -35,6 +39,7 @@ function CreateStatement() {
       setRequestFor('');
       setNotes('');
     } catch (err: any) {
+      console.log(err);
       setError(err.msg);
     }
   };
