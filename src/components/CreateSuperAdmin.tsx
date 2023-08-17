@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[#$@!%]).{8,24}/;
 
-function CreateAdmin() {
+function CreateSuperAdmin() {
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
   const [email, setEmail] = useState<string>('');
@@ -205,4 +205,4 @@ function CreateAdmin() {
   );
 }
 
-export default CreateAdmin;
+export default CreateSuperAdmin;
