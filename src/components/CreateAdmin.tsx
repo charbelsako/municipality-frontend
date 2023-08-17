@@ -11,13 +11,13 @@ import {
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from './register.module.css';
-const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[#$@!%]).{8,24}/;
 
 function CreateAdmin() {
   const userRef = useRef<HTMLInputElement>(null);
-  const errRef = useRef();
+  const errRef = useRef<HTMLParagraphElement>(null);
   const [email, setEmail] = useState<string>('');
   const [validEmail, setValidEmail] = useState<boolean>(false);
   const [emailFocus, setEmailFocus] = useState(false);
@@ -30,7 +30,6 @@ function CreateAdmin() {
   const [isMatch, setIsMatch] = useState<boolean>(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
-  const [success, setSuccess] = useState<boolean>(false);
   const [error, setError] = useState<string>('something went wrong');
 
   useEffect(() => {
@@ -62,28 +61,37 @@ function CreateAdmin() {
         setError('Invalid Entry');
         return;
       }
-      setSuccess(true);
       setEmail('');
       setPassword('');
       setMatchPassword('');
     } catch (loginUserError) {
       setError('something went wrong');
+      if (errRef.current) errRef.current.focus();
     }
   };
 
   return (
     <div>
       <h1>Create Citizen account</h1>
+      <div className='flex items-center justify-center'>
+        <p
+          ref={errRef}
+          className={error ? 'error-message' : 'offscreen'}
+          aria-live='assertive'
+        >
+          {error}
+        </p>
+      </div>
       <form onSubmit={registerUser}>
         <label htmlFor='username'>
           Username:
           <FontAwesomeIcon
             icon={faCheck}
-            className={validEmail ? styles.valid : styles.hide}
+            className={validEmail ? 'valid' : 'hide'}
           />
           <FontAwesomeIcon
             icon={faTimes}
-            className={validEmail || !email ? styles.hide : styles.invalid}
+            className={validEmail || !email ? 'hide' : 'invalid'}
           />
         </label>
         <div>
@@ -105,9 +113,7 @@ function CreateAdmin() {
         <p
           id='emailnote'
           className={
-            emailFocus && email && !validEmail
-              ? styles.instructions
-              : styles.offscreen
+            emailFocus && email && !validEmail ? 'instructions' : 'offscreen'
           }
         >
           <FontAwesomeIcon icon={faInfoCircle} />
@@ -119,13 +125,11 @@ function CreateAdmin() {
           Password:
           <FontAwesomeIcon
             icon={faCheck}
-            className={validPassword ? styles.valid : styles.hide}
+            className={validPassword ? 'valid' : 'hide'}
           />
           <FontAwesomeIcon
             icon={faTimes}
-            className={
-              validPassword || !password ? styles.hide : styles.invalid
-            }
+            className={validPassword || !password ? 'hide' : 'invalid'}
           />
         </label>
         <input
@@ -143,9 +147,7 @@ function CreateAdmin() {
         <p
           id='passwordnote'
           className={
-            passwordFocus && !validPassword
-              ? styles.instructions
-              : styles.offscreen
+            passwordFocus && !validPassword ? 'instructions' : 'offscreen'
           }
         >
           <FontAwesomeIcon icon={faInfoCircle} />
@@ -166,13 +168,11 @@ function CreateAdmin() {
             Confirm Password:
             <FontAwesomeIcon
               icon={faCheck}
-              className={isMatch && matchPassword ? styles.valid : styles.hide}
+              className={isMatch && matchPassword ? 'valid' : 'hide'}
             />
             <FontAwesomeIcon
               icon={faTimes}
-              className={
-                isMatch || !matchPassword ? styles.hide : styles.invalid
-              }
+              className={isMatch || !matchPassword ? 'hide' : 'invalid'}
             />
           </label>
           <input
@@ -188,9 +188,7 @@ function CreateAdmin() {
           />
           <p
             id='confirmnote'
-            className={
-              matchFocus && !isMatch ? styles.instructions : styles.offscreen
-            }
+            className={matchFocus && !isMatch ? 'instructions' : 'offscreen'}
           >
             <FontAwesomeIcon icon={faInfoCircle} />
             Must match the first password input field.
