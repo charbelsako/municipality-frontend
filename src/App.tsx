@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 import Login from './components/Login';
 import Protected from './components/Protected';
 import RequireAuth from './components/RequireAuth';
+import UserProfile from './components/UserProfile';
 import Unauthorized from './components/Unauthorized';
 import Home from './components/Home';
 import CreateStatement from './components/CreateStatement';
@@ -29,6 +30,7 @@ function App() {
               >
                 {/* This will be the dashboard of all roles */}
                 <Route path='/' element={<Home />} />
+                <Route path='profile' element={<UserProfile />} />
               </Route>
 
               {/* all the routes allowed for super admin role */}

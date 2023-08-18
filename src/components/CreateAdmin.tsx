@@ -11,8 +11,8 @@ import {
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { EMAIL_REGEX } from '../constants';
 
-const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[#$@!%]).{8,24}/;
 
 function CreateAdmin() {
@@ -54,7 +54,6 @@ function CreateAdmin() {
   const registerUser: FormEventHandler = (e: FormEvent) => {
     try {
       e.preventDefault();
-      console.log(email, password);
       const v1 = EMAIL_REGEX.test(email);
       const v2 = PASSWORD_REGEX.test(password);
       if (!v1 || !v2) {

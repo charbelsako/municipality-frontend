@@ -16,9 +16,9 @@ import styles from './register.module.css';
 const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[#$@!%]).{8,24}/;
 
-function login() {
+function CreateCitizen() {
   const userRef = useRef<HTMLInputElement>(null);
-  const errRef = useRef();
+  const errRef = useRef<HTMLParagraphElement>(null);
   const [email, setEmail] = useState<string>('');
   const [validEmail, setValidEmail] = useState<boolean>(false);
   const [emailFocus, setEmailFocus] = useState(false);
@@ -56,7 +56,6 @@ function login() {
   const registerUser: FormEventHandler = (e: FormEvent) => {
     try {
       e.preventDefault();
-      console.log(email, password);
       const v1 = EMAIL_REGEX.test(email);
       const v2 = PASSWORD_REGEX.test(password);
       if (!v1 || !v2) {
@@ -69,12 +68,22 @@ function login() {
       setMatchPassword('');
     } catch (loginUserError) {
       setError('something went wrong');
+      if (errRef.current) errRef?.current.focus();
     }
   };
 
   return (
     <div>
       <h1>Create Citizen account</h1>
+      <div className='flex items-center justify-center'>
+        <p
+          ref={errRef}
+          className={error ? 'error-message' : 'offscreen'}
+          aria-live='assertive'
+        >
+          {error}
+        </p>
+      </div>
       <form onSubmit={registerUser}>
         <label htmlFor='username'>
           Username:
@@ -208,4 +217,4 @@ function login() {
   );
 }
 
-export default login;
+export default CreateCitizen;
