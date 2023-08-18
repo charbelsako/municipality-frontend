@@ -22,6 +22,8 @@ const useAxiosPrivate = () => {
       response => response,
       async error => {
         const prevReq = error?.config;
+        console.log('previously sent', prevReq.sent);
+        console.log('response status', error.response.status);
         if (error.response.status === 403 && !prevReq?.sent) {
           prevReq.sent = true;
           const newAccessToken = await refresh();
