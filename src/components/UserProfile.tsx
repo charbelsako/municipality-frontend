@@ -84,7 +84,7 @@ function UserProfile() {
       };
 
       await axios.post('/api/v1/user/update-user', data);
-
+      setError('');
       setStatus('User updated successfully');
     } catch (err: any) {
       setStatus('');
