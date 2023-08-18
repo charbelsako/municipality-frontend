@@ -68,7 +68,6 @@ export function Login() {
         },
         { withCredentials: true }
       );
-      console.log(response.data.data);
       setAuth({
         email,
         role: response.data.data.role,
@@ -84,7 +83,7 @@ export function Login() {
   };
 
   return (
-    <main className='container flex flex-col items-center space-y-5 text-xl'>
+    <main className='flex flex-col items-center justify-center space-y-5 text-xl'>
       <h1 className='text-5xl'>Login</h1>
       <div className='flex items-center justify-center'>
         <span

@@ -8,10 +8,8 @@ const useAxiosPrivate = () => {
   const { auth } = useAuth();
 
   useEffect(() => {
-    console.log('setting interceptors');
     const requestIntercept = axiosPrivate.interceptors.request.use(
       config => {
-        console.log(auth);
         if (!config.headers['Authorization']) {
           config.headers['Authorization'] = `Bearer ${auth.token}`;
         }

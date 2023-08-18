@@ -54,7 +54,6 @@ function CreateSuperAdmin() {
   const registerUser: FormEventHandler = (e: FormEvent) => {
     try {
       e.preventDefault();
-      console.log(email, password);
       const v1 = EMAIL_REGEX.test(email);
       const v2 = PASSWORD_REGEX.test(password);
       if (!v1 || !v2) {

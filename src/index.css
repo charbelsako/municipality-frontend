@@ -27,6 +27,12 @@
   .disabled-button {
     @apply bg-gray-200 rounded p-1;
   }
+  .hide {
+    @apply hidden;
+  }
+  .success {
+    @apply text-green-700 bg-green-700/40 p-3 w-[400px] mx-auto;
+  }
   /* .link {
     @apply inline p-2 m-1;
   } */

@@ -10,8 +10,6 @@ const useRefreshToken = () => {
       withCredentials: true,
     });
     setAuth((prev: any) => {
-      console.log('refresh token previous', prev);
-      console.log('refresh response data', response.data);
       return {
         ...prev,
         role: response.data.data.role,
