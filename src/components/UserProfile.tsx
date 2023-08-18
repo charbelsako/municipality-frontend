@@ -40,7 +40,7 @@ function UserProfile() {
   const [sex, setSex] = useState('');
   const [name, setName] = useState<IName>();
   const [email, setEmail] = useState('');
-  const [validEmail, setValidEmail] = useState(true);
+  const [validEmail, setValidEmail] = useState(false);
 
   const [success, setStatus] = useState('');
   const [error, setError] = useState('');
@@ -73,7 +73,11 @@ function UserProfile() {
   const handleSaveUserData = async (e: FormEvent) => {
     try {
       e.preventDefault();
-      if (!validEmail) setError('invalid entry');
+      if (!validEmail) {
+        setStatus('');
+        setError('invalid entry');
+        return;
+      }
 
       const data = {
         name,
@@ -84,7 +88,7 @@ function UserProfile() {
       };
 
       await axios.post('/api/v1/user/update-user', data);
-
+      setError('');
       setStatus('User updated successfully');
     } catch (err: any) {
       setStatus('');
