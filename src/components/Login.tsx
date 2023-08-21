@@ -15,8 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useAuth from '../hooks/useAuth';
 import axios from '../api/axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-
-const EMAIL_REGEX = /^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/;
+import { EMAIL_REGEX } from '../constants';
 
 export function Login() {
   const { setAuth } = useAuth();

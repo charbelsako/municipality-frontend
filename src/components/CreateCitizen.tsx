@@ -4,8 +4,8 @@ import {
   useState,
   useEffect,
   useRef,
-  LegacyRef,
 } from 'react';
+
 import {
   faCheck,
   faTimes,
@@ -13,7 +13,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './register.module.css';
-const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+import { EMAIL_REGEX } from '../constants';
+
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[#$@!%]).{8,24}/;
 
 function CreateCitizen() {
