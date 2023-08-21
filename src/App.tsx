@@ -11,6 +11,7 @@ import CreateStatement from './components/CreateStatement';
 import PersistLogin from './components/PersistLogin';
 import CreateAdmin from './components/CreateAdmin';
 import CreateSuperAdmin from './components/CreateSuperAdmin';
+import MyDocuments from './components/MyDocuments';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route path='login' element={<Login />} />
+            {/* <Route path='signup' element={<Signup />} /> */}
 
             <Route element={<PersistLogin />}>
               <Route
@@ -52,6 +54,7 @@ function App() {
                 element={<RequireAuth allowedRoles={['Citizen', 'Admin']} />}
               >
                 <Route path='create-statement' element={<CreateStatement />} />
+                <Route path='document/my' element={<MyDocuments />} />
               </Route>
             </Route>
           </Route>

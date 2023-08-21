@@ -18,6 +18,9 @@ const Navbar = () => {
         {auth.email && (
           <>
             <li className='link'>
+              <Link to='/document/my'>My Documents</Link>
+            </li>
+            <li className='link'>
               <Link to='/profile'>My profile</Link>
             </li>
             <li className='link'>
