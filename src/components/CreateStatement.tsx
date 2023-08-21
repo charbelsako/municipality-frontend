@@ -2,13 +2,13 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { FormEvent, useState } from 'react';
 
 function CreateStatement() {
-  const [address, setAddress] = useState<string>();
-  const [phoneNumber, setPhone] = useState<string>();
-  const [propertyNo, setPropertyNo] = useState<string>();
-  const [sectionNo, setSectionNo] = useState<string>();
-  const [realEstateArea, setRealEstateArea] = useState<string>();
-  const [requestFor, setRequestFor] = useState<string>();
-  const [notes, setNotes] = useState<string>();
+  const [address, setAddress] = useState<string>('');
+  const [phoneNumber, setPhone] = useState<string>('');
+  const [propertyNo, setPropertyNo] = useState<string>('');
+  const [sectionNo, setSectionNo] = useState<string>('');
+  const [realEstateArea, setRealEstateArea] = useState<string>('');
+  const [requestFor, setRequestFor] = useState<string>('');
+  const [notes, setNotes] = useState<string>('');
 
   const [err, setError] = useState<string>();
 
@@ -26,11 +26,11 @@ function CreateStatement() {
         requestFor,
         notes,
       };
-      const response = await axiosPrivate.post(
+      await axiosPrivate.post(
         '/api/v1/documents/statement-document/create',
         data
       );
-      console.log(response);
+
       setAddress('');
       setPhone('');
       setPropertyNo('');
@@ -39,7 +39,6 @@ function CreateStatement() {
       setRequestFor('');
       setNotes('');
     } catch (err: any) {
-      console.log(err);
       setError(err.msg);
     }
   };
