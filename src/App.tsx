@@ -12,6 +12,7 @@ import PersistLogin from './components/PersistLogin';
 import CreateAdmin from './components/CreateAdmin';
 import CreateSuperAdmin from './components/CreateSuperAdmin';
 import MyDocuments from './components/MyDocuments';
+import CreateCitizen from './components/CreateCitizen';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route path='login' element={<Login />} />
+            <Route path='signup' element={<CreateCitizen />} />
             {/* <Route path='signup' element={<Signup />} /> */}
 
             <Route element={<PersistLogin />}>
