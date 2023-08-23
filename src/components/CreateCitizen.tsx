@@ -19,17 +19,15 @@ function CreateCitizen() {
   const errRef = useRef<HTMLParagraphElement>(null);
   const [email, setEmail] = useState<string>('');
   const [validEmail, setValidEmail] = useState<boolean>(false);
-  const [emailFocus, setEmailFocus] = useState(false);
 
   const [password, setPassword] = useState<string>('');
   const [validPassword, setValidPassword] = useState<boolean>(false);
-  const [passwordFocus, setPasswordFocus] = useState(false);
 
   const [matchPassword, setMatchPassword] = useState<string>('');
   const [isMatch, setIsMatch] = useState<boolean>(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
-  const [success, setSuccess] = useState<boolean>(false);
+  const [status, setStatus] = useState<string>('');
   const [error, setError] = useState<string>('something went wrong');
 
   useEffect(() => {
@@ -60,7 +58,7 @@ function CreateCitizen() {
         setError('Invalid Entry');
         return;
       }
-      setSuccess(true);
+      setStatus('Successfully created your account');
       setEmail('');
       setPassword('');
       setMatchPassword('');
@@ -71,8 +69,9 @@ function CreateCitizen() {
   };
 
   return (
-    <div>
-      <h1>Create Citizen account</h1>
+    <div className='flex flex-col items-center'>
+      <h1>Sign up / Create Citizen account</h1>
+      {status && <p className='success'>{status}</p>}
       <div className='flex items-center justify-center'>
         <p
           ref={errRef}
@@ -82,9 +81,12 @@ function CreateCitizen() {
           {error}
         </p>
       </div>
-      <form onSubmit={registerUser}>
-        <label htmlFor='username'>
-          Username:
+      <form
+        onSubmit={registerUser}
+        className='grid grid-cols-2 w-[500px] space-y-3 text-left items-center'
+      >
+        <label htmlFor='username' className='pt-3'>
+          Email:
           <FontAwesomeIcon
             icon={faCheck}
             className={validEmail ? 'valid' : 'hide'}
@@ -94,32 +96,19 @@ function CreateCitizen() {
             className={validEmail || !email ? 'hide' : 'invalid'}
           />
         </label>
-        <div>
-          <label htmlFor='email'>email</label>
-          <input
-            type='text'
-            name='email'
-            ref={userRef}
-            id='email'
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-            aria-invalid={validEmail ? 'false' : 'true'}
-            aria-describedby='emailnote'
-            onFocus={() => setEmailFocus(true)}
-            onBlur={() => setEmailFocus(false)}
-          />
-        </div>
-        <p
-          id='emailnote'
-          className={
-            emailFocus && email && !validEmail ? 'instructions' : 'offscreen'
-          }
-        >
-          <FontAwesomeIcon icon={faInfoCircle} />
-          <br />
-          Must be an email
-        </p>
+        <input
+          type='text'
+          name='email'
+          className='input'
+          placeholder='Enter your email'
+          ref={userRef}
+          id='email'
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+          aria-invalid={validEmail ? 'false' : 'true'}
+          aria-describedby='emailnote'
+        />
 
         <label htmlFor='password'>
           Password:
@@ -134,66 +123,46 @@ function CreateCitizen() {
         </label>
         <input
           type='password'
+          className='input'
+          placeholder='Enter a password'
           name='password'
           id='password'
           aria-invalid={validPassword ? 'false' : 'true'}
           aria-describedby='passwordnote'
           value={password}
           onChange={e => setPassword(e.target.value)}
-          onFocus={() => setPasswordFocus(true)}
-          onBlur={() => setPasswordFocus(false)}
         />
-
+        <label htmlFor='confirm_pwd'>
+          Confirm Password:
+          <FontAwesomeIcon
+            icon={faCheck}
+            className={isMatch && matchPassword ? 'valid' : 'hide'}
+          />
+          <FontAwesomeIcon
+            icon={faTimes}
+            className={isMatch || !matchPassword ? 'hide' : 'invalid'}
+          />
+        </label>
+        <input
+          className='input'
+          placeholder='Enter password confirmation'
+          type='password'
+          id='confirm_pwd'
+          onChange={e => setMatchPassword(e.target.value)}
+          value={matchPassword}
+          required
+          aria-invalid={isMatch ? 'false' : 'true'}
+          aria-describedby='confirmnote'
+          onFocus={() => setMatchFocus(true)}
+          onBlur={() => setMatchFocus(false)}
+        />
         <p
-          id='passwordnote'
-          className={
-            passwordFocus && !validPassword ? 'instructions' : 'offscreen'
-          }
+          id='confirmnote'
+          className={matchFocus && !isMatch ? 'instructions' : 'offscreen'}
         >
           <FontAwesomeIcon icon={faInfoCircle} />
-          8 to 24 characters.
-          <br />
-          Must include uppercase and lowercase letters, a number and a special
-          character.
-          <br />
-          Allowed special characters:{' '}
-          <span aria-label='exclamation mark'>!</span>{' '}
-          <span aria-label='at symbol'>@</span>{' '}
-          <span aria-label='hashtag'>#</span>{' '}
-          <span aria-label='dollar sign'>$</span>{' '}
-          <span aria-label='percent'>%</span>
+          Must match the first password input field.
         </p>
-        <div>
-          <label htmlFor='confirm_pwd'>
-            Confirm Password:
-            <FontAwesomeIcon
-              icon={faCheck}
-              className={isMatch && matchPassword ? 'valid' : 'hide'}
-            />
-            <FontAwesomeIcon
-              icon={faTimes}
-              className={isMatch || !matchPassword ? 'hide' : 'invalid'}
-            />
-          </label>
-          <input
-            type='password'
-            id='confirm_pwd'
-            onChange={e => setMatchPassword(e.target.value)}
-            value={matchPassword}
-            required
-            aria-invalid={isMatch ? 'false' : 'true'}
-            aria-describedby='confirmnote'
-            onFocus={() => setMatchFocus(true)}
-            onBlur={() => setMatchFocus(false)}
-          />
-          <p
-            id='confirmnote'
-            className={matchFocus && !isMatch ? 'instructions' : 'offscreen'}
-          >
-            <FontAwesomeIcon icon={faInfoCircle} />
-            Must match the first password input field.
-          </p>
-        </div>
 
         <button
           disabled={!validEmail || !validPassword || !isMatch ? true : false}

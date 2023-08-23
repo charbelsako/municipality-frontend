@@ -12,9 +12,6 @@
   .error-message {
     @apply text-red-700 bg-red-400/40 p-3 rounded w-[400px] mx-auto;
   }
-  .instructions {
-    @apply text-xs bg-black text-white;
-  }
   .offscreen {
     @apply absolute left-[-1000px];
   }
