@@ -11,9 +11,7 @@ import {
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { EMAIL_REGEX } from '../constants';
-
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[#$@!%]).{8,24}/;
+import { EMAIL_REGEX, PASSWORD_REGEX } from '../constants';
 
 function CreateSuperAdmin() {
   const userRef = useRef<HTMLInputElement>(null);

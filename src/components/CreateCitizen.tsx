@@ -12,10 +12,7 @@ import {
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from './register.module.css';
-import { EMAIL_REGEX } from '../constants';
-
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[#$@!%]).{8,24}/;
+import { EMAIL_REGEX, PASSWORD_REGEX } from '../constants';
 
 function CreateCitizen() {
   const userRef = useRef<HTMLInputElement>(null);
@@ -90,11 +87,11 @@ function CreateCitizen() {
           Username:
           <FontAwesomeIcon
             icon={faCheck}
-            className={validEmail ? styles.valid : styles.hide}
+            className={validEmail ? 'valid' : 'hide'}
           />
           <FontAwesomeIcon
             icon={faTimes}
-            className={validEmail || !email ? styles.hide : styles.invalid}
+            className={validEmail || !email ? 'hide' : 'invalid'}
           />
         </label>
         <div>
@@ -116,9 +113,7 @@ function CreateCitizen() {
         <p
           id='emailnote'
           className={
-            emailFocus && email && !validEmail
-              ? styles.instructions
-              : styles.offscreen
+            emailFocus && email && !validEmail ? 'instructions' : 'offscreen'
           }
         >
           <FontAwesomeIcon icon={faInfoCircle} />
@@ -130,13 +125,11 @@ function CreateCitizen() {
           Password:
           <FontAwesomeIcon
             icon={faCheck}
-            className={validPassword ? styles.valid : styles.hide}
+            className={validPassword ? 'valid' : 'hide'}
           />
           <FontAwesomeIcon
             icon={faTimes}
-            className={
-              validPassword || !password ? styles.hide : styles.invalid
-            }
+            className={validPassword || !password ? 'hide' : 'invalid'}
           />
         </label>
         <input
@@ -154,9 +147,7 @@ function CreateCitizen() {
         <p
           id='passwordnote'
           className={
-            passwordFocus && !validPassword
-              ? styles.instructions
-              : styles.offscreen
+            passwordFocus && !validPassword ? 'instructions' : 'offscreen'
           }
         >
           <FontAwesomeIcon icon={faInfoCircle} />
@@ -177,13 +168,11 @@ function CreateCitizen() {
             Confirm Password:
             <FontAwesomeIcon
               icon={faCheck}
-              className={isMatch && matchPassword ? styles.valid : styles.hide}
+              className={isMatch && matchPassword ? 'valid' : 'hide'}
             />
             <FontAwesomeIcon
               icon={faTimes}
-              className={
-                isMatch || !matchPassword ? styles.hide : styles.invalid
-              }
+              className={isMatch || !matchPassword ? 'hide' : 'invalid'}
             />
           </label>
           <input
@@ -199,9 +188,7 @@ function CreateCitizen() {
           />
           <p
             id='confirmnote'
-            className={
-              matchFocus && !isMatch ? styles.instructions : styles.offscreen
-            }
+            className={matchFocus && !isMatch ? 'instructions' : 'offscreen'}
           >
             <FontAwesomeIcon icon={faInfoCircle} />
             Must match the first password input field.
