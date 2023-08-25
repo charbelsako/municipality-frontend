@@ -22,14 +22,16 @@ const MyDocuments = () => {
     <div className='flex justify-center mt-10'>
       {loading ? (
         <>Loading...</>
+      ) : documents.length === 0 ? (
+        <p className='text-3xl'>No documents to show</p>
       ) : (
-        <table className='border border-black'>
+        <table className='border border-black w-[500px]'>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Status</th>
-              <th>Request For</th>
-              <th>Type</th>
+              <th className='border border-black'>ID</th>
+              <th className='border border-black'>Status</th>
+              <th className='border border-black'>Request For</th>
+              <th className='border border-black'>Type</th>
             </tr>
           </thead>
           <tbody className='border border-black'>
