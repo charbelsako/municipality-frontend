@@ -10,7 +10,7 @@
     @apply ml-2 text-red-700;
   }
   .error-message {
-    @apply text-red-700 bg-red-400/40 p-3 rounded w-[400px] mx-auto;
+    @apply text-red-700 bg-red-400/40 p-3 rounded w-[400px] mx-auto my-3;
   }
   .instructions {
     @apply text-xs bg-black/50 text-white m-1 p-1;

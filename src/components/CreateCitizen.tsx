@@ -12,9 +12,14 @@ import {
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { EMAIL_REGEX, PASSWORD_REGEX } from '../constants';
+import { EMAIL_REGEX, PASSWORD_REGEX, SECTS, SEXES } from '../constants';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 function CreateCitizen() {
+  const axios = useAxiosPrivate();
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
   const [email, setEmail] = useState<string>('');
@@ -33,12 +38,17 @@ function CreateCitizen() {
   const [phone, setPhone] = useState<string>('');
   const [personalSect, setPersonalSect] = useState<string>('');
   const [recordSect, setRecordSect] = useState<string>('');
-  const [recordNumber, setRecordNumber] = useState<number>();
+  const [recordNumber, setRecordNumber] = useState<string>();
   const [sex, setSex] = useState<string>('');
-  const [dateOfBirth, setDateOfBirth] = useState();
+  const [dateOfBirth, setDateOfBirth] = useState<any>();
+
+  const [fatherName, setFatherName] = useState<string>();
+  const [lastName, setLastName] = useState<string>();
+  const [motherName, setMotherName] = useState<string>();
+  const [firstName, setFirstName] = useState<string>();
 
   const [success, setSuccess] = useState<boolean>(false);
-  const [error, setError] = useState<string>('something went wrong');
+  const [error, setError] = useState<any>();
 
   useEffect(() => {
     if (userRef.current) {
@@ -59,7 +69,7 @@ function CreateCitizen() {
     setError('');
   }, [email, password, matchPassword]);
 
-  const registerUser: FormEventHandler = (e: FormEvent) => {
+  const registerUser: FormEventHandler = async (e: FormEvent) => {
     try {
       e.preventDefault();
       const v1 = EMAIL_REGEX.test(email);
@@ -68,12 +78,51 @@ function CreateCitizen() {
         setError('Invalid Entry');
         return;
       }
+      console.log('data', {
+        email,
+        password,
+        phoneNumbers: phone,
+        name: {
+          firstName,
+          motherName,
+          fatherName,
+          lastName,
+        },
+        dateOfBirth,
+        personalSect,
+        recordSect,
+        recordNumber,
+        sex,
+      });
+
+      const response = await axios.post('/api/v1/user/signup', {
+        email,
+        password,
+        phoneNumbers: phone,
+        name: {
+          firstName,
+          motherName,
+          fatherName,
+          lastName,
+        },
+        dateOfBirth,
+        personalSect,
+        recordSect,
+        recordNumber,
+        sex,
+      });
+      console.log(response);
       setSuccess(true);
       setEmail('');
       setPassword('');
       setMatchPassword('');
-    } catch (loginUserError) {
-      setError('something went wrong');
+    } catch (registerUserError: any) {
+      if (registerUserError.response) {
+        console.log('error', registerUserError.response.data.error);
+        setError(registerUserError.response.data.error);
+      } else {
+        setError('something went wrong');
+      }
       if (errRef.current) errRef?.current.focus();
     }
   };
@@ -87,7 +136,11 @@ function CreateCitizen() {
           className={error ? 'error-message' : 'offscreen'}
           aria-live='assertive'
         >
-          {error}
+          {error && Object.keys(error).length > 0
+            ? Object.keys(error).map(key => {
+                return <p>{error[key]}</p>;
+              })
+            : error}
         </p>
       </div>
       <form
@@ -114,7 +167,7 @@ function CreateCitizen() {
           id='email'
           value={email}
           onChange={e => setEmail(e.target.value)}
-          required
+          // required
           aria-invalid={validEmail ? 'false' : 'true'}
           aria-describedby='emailnote'
           onFocus={() => setEmailFocus(true)}
@@ -193,7 +246,7 @@ function CreateCitizen() {
           id='confirm_pwd'
           onChange={e => setMatchPassword(e.target.value)}
           value={matchPassword}
-          required
+          // required
           aria-invalid={isMatch ? 'false' : 'true'}
           aria-describedby='confirmnote'
           onFocus={() => setMatchFocus(true)}
@@ -207,54 +260,141 @@ function CreateCitizen() {
           Must match the first password input field.
         </p>
 
+        <label htmlFor='first-name'>First Name:</label>
+        <input
+          className='input'
+          placeholder='Enter first-name'
+          type='text'
+          id='first-name'
+          name='first-name'
+          onChange={e => setFirstName(e.target.value)}
+          value={firstName}
+          // required
+        />
+
+        <label htmlFor='last-name'>Last Name:</label>
+        <input
+          className='input'
+          placeholder='Enter Last Name'
+          type='text'
+          id='last-name'
+          name='last-name'
+          onChange={e => setLastName(e.target.value)}
+          value={lastName}
+          // required
+        />
+
+        <label htmlFor='mother-name'>Mother Name:</label>
+        <input
+          className='input'
+          placeholder='Enter mother Name'
+          type='text'
+          id='mother-name'
+          name='mother-name'
+          onChange={e => setMotherName(e.target.value)}
+          value={motherName}
+          // required
+        />
+        <label htmlFor='father-name'>Father Name:</label>
+        <input
+          className='input'
+          placeholder='Enter father Name'
+          type='text'
+          id='father-name'
+          name='father-name'
+          onChange={e => setFatherName(e.target.value)}
+          value={fatherName}
+          // required
+        />
+
         <label htmlFor='address'>Address:</label>
         <input
           className='input'
           placeholder='Enter address'
-          type='address'
+          type='text'
           id='address'
           onChange={e => setAddress(e.target.value)}
           value={address}
-          required
+          // required
         />
 
         <label htmlFor='sex'>Sex:</label>
-        <select className='input' onChange={e => setSex(e.target.value)}>
+        <select
+          className='input'
+          onChange={e => setSex(e.target.value)}
+          value={sex}
+        >
           <option value='None'>None</option>
-          <option value='Male'>Male</option>
-          <option value='Female'>Female</option>
+          {Object.values(SEXES).map((sect, index) => (
+            <option key={index} value={sect}>
+              {sect}
+            </option>
+          ))}
         </select>
 
         <label htmlFor='record-sect'>Record Sect:</label>
         <select
-          id='record-set'
+          id='record-sect'
           className='input'
           onChange={e => setRecordSect(e.target.value)}
+          value={recordSect}
         >
           <option value='None'>None</option>
+          {Object.values(SECTS).map((sect, index) => (
+            <option key={index} value={sect}>
+              {sect}
+            </option>
+          ))}
         </select>
 
         <label htmlFor='personal-sect'>Personal Sect:</label>
         <select
+          value={personalSect}
           id='personal-sect'
           className='input'
           onChange={e => setPersonalSect(e.target.value)}
         >
           <option value='None'>None</option>
+          {Object.values(SECTS).map((sect, index) => (
+            <option key={index} value={sect}>
+              {sect}
+            </option>
+          ))}
         </select>
 
         <label htmlFor='record-number'>Record Number:</label>
         <input
-          type='number'
+          type='text'
           name='record-number'
           id='record-number'
           className='input'
           placeholder='Enter record number'
+          value={recordNumber}
+          onChange={e => setRecordNumber(e.target.value)}
         />
 
+        <label htmlFor='phone'>Phone:</label>
+        <input
+          type='text'
+          name='phone'
+          id='phone'
+          className='input'
+          placeholder='Enter phone number'
+          value={phone}
+          onChange={e => setPhone(e.target.value)}
+        />
+
+        <label htmlFor='date-of-birth'>Date of Birth</label>
+        <DatePicker
+          selected={dateOfBirth}
+          onChange={date => setDateOfBirth(date)}
+          className='input w-[100%] '
+        />
+
+        <hr />
         <button
-          disabled={!validEmail || !validPassword || !isMatch ? true : false}
-          className='button mt-2'
+          // disable={!validEmail || !validPassword || !isMatch ? true : false}
+          className='button'
         >
           Create Citizen
         </button>
