@@ -47,7 +47,7 @@ function CreateCitizen() {
   const [motherName, setMotherName] = useState<string>();
   const [firstName, setFirstName] = useState<string>();
 
-  const [success, setSuccess] = useState<boolean>(false);
+  const [status, setStatus] = useState<string>();
   const [error, setError] = useState<any>();
 
   useEffect(() => {
@@ -112,11 +112,13 @@ function CreateCitizen() {
         sex,
       });
       console.log(response);
-      setSuccess(true);
+      setStatus('Successfully created your account');
       setEmail('');
       setPassword('');
       setMatchPassword('');
+      setError('');
     } catch (registerUserError: any) {
+      setStatus('');
       if (registerUserError.response) {
         console.log('error', registerUserError.response.data.error);
         setError(registerUserError.response.data.error);
@@ -130,6 +132,7 @@ function CreateCitizen() {
   return (
     <div className='flex flex-col items-center pb-10'>
       <h1 className='text-4xl p-3 m-2'> Sign up / Create Citizen account</h1>
+      {status && <p className='success'>{status}</p>}
       <div className='flex items-center justify-center'>
         <p
           ref={errRef}
