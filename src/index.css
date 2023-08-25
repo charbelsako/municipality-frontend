@@ -12,6 +12,9 @@
   .error-message {
     @apply text-red-700 bg-red-400/40 p-3 rounded w-[400px] mx-auto;
   }
+  .instructions {
+    @apply text-xs bg-black/50 text-white m-1 p-1;
+  }
   .offscreen {
     @apply absolute left-[-1000px];
   }
@@ -30,7 +33,7 @@
   .success {
     @apply text-green-700 bg-green-700/40 p-3 w-[400px] mx-auto;
   }
-  /* .link {
-    @apply inline p-2 m-1;
-  } */
+  .link:hover {
+    @apply underline;
+  }
 }

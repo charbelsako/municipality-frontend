@@ -11,7 +11,7 @@ export enum DocumentTypes {
 export interface IDocumentRequest {
   _id: string;
   type: DocumentTypes;
-  callee: string; // المستدعي
+  callee: IUser; // المستدعي
   address: string;
   phoneNumber: string;
   propertyNo: string; // عقار رقم
@@ -21,4 +21,33 @@ export interface IDocumentRequest {
   attachedDocuments: number[]; // ! not sure how this will be handled
   notes: string;
   status: string;
+}
+
+export interface IName {
+  firstName: string;
+  fatherName?: string;
+  motherName?: string;
+  lastName: string;
+}
+
+export interface IPersonalInfo {
+  sect: string;
+}
+
+export interface IRecordInfo {
+  sect: string;
+  number: number;
+}
+
+export interface IUser {
+  password: string;
+  name: IName;
+  phoneNumberList: [string];
+  email: string;
+  role: string[];
+  refreshToken?: string;
+  personalInfo: IPersonalInfo;
+  sex: string;
+  recordInfo: IRecordInfo;
+  dateOfBirth: Date;
 }

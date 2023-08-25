@@ -37,7 +37,9 @@ const MyDocuments = () => {
               <tr key={doc._id} className='border border-black'>
                 <td className='p-3 border border-black'>
                   <h1>
-                    <Link to={`${doc._id}`}>{doc._id}</Link>
+                    <Link to={`/documents/${doc._id}`} className='link'>
+                      {doc._id}
+                    </Link>
                   </h1>
                 </td>
 

@@ -13,6 +13,7 @@ import CreateAdmin from './components/CreateAdmin';
 import CreateSuperAdmin from './components/CreateSuperAdmin';
 import MyDocuments from './components/MyDocuments';
 import CreateCitizen from './components/CreateCitizen';
+import DocumentDetails from './components/DocumentDetails';
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
               >
                 <Route path='create-statement' element={<CreateStatement />} />
                 <Route path='document/my' element={<MyDocuments />} />
+                <Route path='/documents/:id' element={<DocumentDetails />} />
               </Route>
             </Route>
           </Route>

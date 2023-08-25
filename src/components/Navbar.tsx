@@ -17,23 +17,33 @@ const Navbar = () => {
       <ul className='flex space-x-4'>
         {auth.email && (
           <>
-            <li className='link'>
-              <Link to='/document/my'>My Documents</Link>
+            <li>
+              <Link to='/document/my' className='link'>
+                My Documents
+              </Link>
             </li>
-            <li className='link'>
-              <Link to='/profile'>My profile</Link>
+            <li>
+              <Link to='/profile' className='link'>
+                My profile
+              </Link>
             </li>
-            <li className='link'>
+            <li>
               <button onClick={signOut}>Logout</button>
             </li>
           </>
         )}
         {!auth.email && (
           <>
-            <li className='link'>
-              <Link to='/login'>Login</Link>
+            <li>
+              <Link to='/login' className='link'>
+                Login
+              </Link>
             </li>
-            <li className='link'>Sign up</li>
+            <li>
+              <Link to='/signup' className='link'>
+                Sign up
+              </Link>
+            </li>
           </>
         )}
       </ul>
