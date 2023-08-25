@@ -1,20 +1,26 @@
 import { Link } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 const Home = () => {
-
+  const { auth } = useAuth();
   return (
-    <section>
+    <section className='text-left p-5 m-2'>
       <h1>Home</h1>
       <br />
       <p>You are logged in!</p>
       <br />
-      <Link to='/create-statement'>Go to create statement page</Link>
-      {/* <br />
-      <Link to='/admin'>Go to the Admin page</Link>
-      <br />
-      <Link to='/lounge'>Go to the Lounge</Link>
-      <br />
-      <Link to='/linkpage'>Go to the link page</Link> */}
+      <p className='text-2xl'>Links:</p>
+      {auth.role === 'Citizen' ? (
+        <Link to='/create-statement' className='link text-blue-500 underline'>
+          create statement
+        </Link>
+      ) : null}
+
+      {auth.role === 'Admin' ? (
+        <Link to='/create-admin' className='link text-blue-500 underline'>
+          create statement
+        </Link>
+      ) : null}
     </section>
   );
 };
