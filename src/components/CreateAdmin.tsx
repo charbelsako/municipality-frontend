@@ -11,9 +11,13 @@ import {
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { EMAIL_REGEX, PASSWORD_REGEX } from '../constants';
+import { EMAIL_REGEX, PASSWORD_REGEX, SECTS, SEXES } from '../constants';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import DatePicker from 'react-datepicker';
 
 function CreateAdmin() {
+  const axios = useAxiosPrivate();
+
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
   const [email, setEmail] = useState<string>('');
@@ -27,6 +31,19 @@ function CreateAdmin() {
   const [matchPassword, setMatchPassword] = useState<string>('');
   const [isMatch, setIsMatch] = useState<boolean>(false);
   const [matchFocus, setMatchFocus] = useState(false);
+
+  const [address, setAddress] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [personalSect, setPersonalSect] = useState<string>('');
+  const [recordSect, setRecordSect] = useState<string>('');
+  const [recordNumber, setRecordNumber] = useState<string>();
+  const [sex, setSex] = useState<string>('');
+  const [dateOfBirth, setDateOfBirth] = useState<any>();
+
+  const [fatherName, setFatherName] = useState<string>();
+  const [lastName, setLastName] = useState<string>();
+  const [motherName, setMotherName] = useState<string>();
+  const [firstName, setFirstName] = useState<string>();
 
   const [error, setError] = useState<string>('something went wrong');
 
@@ -49,7 +66,7 @@ function CreateAdmin() {
     setError('');
   }, [email, password, matchPassword]);
 
-  const registerUser: FormEventHandler = (e: FormEvent) => {
+  const createAdmin: FormEventHandler = async (e: FormEvent) => {
     try {
       e.preventDefault();
       const v1 = EMAIL_REGEX.test(email);
@@ -58,6 +75,23 @@ function CreateAdmin() {
         setError('Invalid Entry');
         return;
       }
+      const response = await axios.post('/api/v1/user/create-admin', {
+        email,
+        password,
+        phoneNumbers: phone,
+        name: {
+          firstName,
+          motherName,
+          fatherName,
+          lastName,
+        },
+        dateOfBirth,
+        personalSect,
+        recordSect,
+        recordNumber,
+        sex,
+      });
+
       setEmail('');
       setPassword('');
       setMatchPassword('');
@@ -79,9 +113,9 @@ function CreateAdmin() {
           {error}
         </p>
       </div>
-      <form onSubmit={registerUser}>
-        <label htmlFor='username'>
-          Username:
+      <form onSubmit={createAdmin}>
+        <label htmlFor='email'>
+          Email:
           <FontAwesomeIcon
             icon={faCheck}
             className={validEmail ? 'valid' : 'hide'}
@@ -92,7 +126,6 @@ function CreateAdmin() {
           />
         </label>
         <div>
-          <label htmlFor='email'>email</label>
           <input
             type='text'
             name='email'
@@ -160,6 +193,7 @@ function CreateAdmin() {
           <span aria-label='dollar sign'>$</span>{' '}
           <span aria-label='percent'>%</span>
         </p>
+
         <div>
           <label htmlFor='confirm_pwd'>
             Confirm Password:
@@ -191,6 +225,137 @@ function CreateAdmin() {
             Must match the first password input field.
           </p>
         </div>
+
+        <label htmlFor='first-name'>First Name:</label>
+        <input
+          className='input'
+          placeholder='Enter first-name'
+          type='text'
+          id='first-name'
+          name='first-name'
+          onChange={e => setFirstName(e.target.value)}
+          value={firstName}
+          // required
+        />
+
+        <label htmlFor='last-name'>Last Name:</label>
+        <input
+          className='input'
+          placeholder='Enter Last Name'
+          type='text'
+          id='last-name'
+          name='last-name'
+          onChange={e => setLastName(e.target.value)}
+          value={lastName}
+          // required
+        />
+
+        <label htmlFor='mother-name'>Mother Name:</label>
+        <input
+          className='input'
+          placeholder='Enter mother Name'
+          type='text'
+          id='mother-name'
+          name='mother-name'
+          onChange={e => setMotherName(e.target.value)}
+          value={motherName}
+          // required
+        />
+        <label htmlFor='father-name'>Father Name:</label>
+        <input
+          className='input'
+          placeholder='Enter father Name'
+          type='text'
+          id='father-name'
+          name='father-name'
+          onChange={e => setFatherName(e.target.value)}
+          value={fatherName}
+          // required
+        />
+
+        <label htmlFor='address'>Address:</label>
+        <input
+          className='input'
+          placeholder='Enter address'
+          type='text'
+          id='address'
+          onChange={e => setAddress(e.target.value)}
+          value={address}
+          // required
+        />
+
+        <label htmlFor='sex'>Sex:</label>
+        <select
+          className='input'
+          onChange={e => setSex(e.target.value)}
+          value={sex}
+        >
+          <option value='None'>None</option>
+          {Object.values(SEXES).map((sect, index) => (
+            <option key={index} value={sect}>
+              {sect}
+            </option>
+          ))}
+        </select>
+
+        <label htmlFor='record-sect'>Record Sect:</label>
+        <select
+          id='record-sect'
+          className='input'
+          onChange={e => setRecordSect(e.target.value)}
+          value={recordSect}
+        >
+          <option value='None'>None</option>
+          {Object.values(SECTS).map((sect, index) => (
+            <option key={index} value={sect}>
+              {sect}
+            </option>
+          ))}
+        </select>
+
+        <label htmlFor='personal-sect'>Personal Sect:</label>
+        <select
+          value={personalSect}
+          id='personal-sect'
+          className='input'
+          onChange={e => setPersonalSect(e.target.value)}
+        >
+          <option value='None'>None</option>
+          {Object.values(SECTS).map((sect, index) => (
+            <option key={index} value={sect}>
+              {sect}
+            </option>
+          ))}
+        </select>
+
+        <label htmlFor='record-number'>Record Number:</label>
+        <input
+          type='text'
+          name='record-number'
+          id='record-number'
+          className='input'
+          placeholder='Enter record number'
+          value={recordNumber}
+          onChange={e => setRecordNumber(e.target.value)}
+        />
+
+        <label htmlFor='phone'>Phone:</label>
+        <input
+          type='text'
+          name='phone'
+          id='phone'
+          className='input'
+          placeholder='Enter phone number'
+          value={phone}
+          onChange={e => setPhone(e.target.value)}
+        />
+
+        <label htmlFor='date-of-birth'>Date of Birth</label>
+        <DatePicker
+          selected={dateOfBirth}
+          onChange={date => setDateOfBirth(date)}
+          className='input w-[100%] '
+        />
 
         <button
           disabled={!validEmail || !validPassword || !isMatch ? true : false}
