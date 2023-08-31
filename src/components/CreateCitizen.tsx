@@ -122,7 +122,7 @@ function CreateCitizen() {
           className={error ? 'error-message' : 'offscreen'}
           aria-live='assertive'
         >
-          {error && Object.keys(error).length > 0
+          {error && typeof error === 'object' && Object.keys(error).length > 0
             ? Object.keys(error).map(key => {
                 return <p>{error[key]}</p>;
               })
