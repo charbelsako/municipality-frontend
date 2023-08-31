@@ -75,8 +75,12 @@ export function Login() {
       setEmail('');
       setPassword('');
       navigate(from, { replace: true });
-    } catch (loginUserError) {
-      setError('Something went wrong');
+    } catch (loginUserError: any) {
+      if (loginUserError.status === 401) {
+        setError('Wrong email or password');
+      } else {
+        setError('Something went wrong');
+      }
       if (errRef.current) errRef.current.focus();
     }
   };

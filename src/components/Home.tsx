@@ -11,13 +11,16 @@ const Home = () => {
       <br />
       <p className='text-2xl'>Links:</p>
       {auth.role === 'Citizen' ? (
-        <Link to='/create-statement' className='link text-blue-500 underline'>
+        <Link
+          to='/documents/create-statement'
+          className='link text-blue-500 underline'
+        >
           create statement
         </Link>
       ) : null}
 
       {auth.role === 'Admin' ? (
-        <Link to='/create-admin' className='link text-blue-500 underline'>
+        <Link to='/user/create-admin' className='link text-blue-500 underline'>
           create statement
         </Link>
       ) : null}
