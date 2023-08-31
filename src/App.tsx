@@ -15,6 +15,7 @@ import MyDocuments from './components/MyDocuments';
 import CreateCitizen from './components/CreateCitizen';
 import DocumentDetails from './components/DocumentDetails';
 import ChangePassword from './components/ChangePassword';
+import ChangeRole from './components/ChangeRole';
 
 function App() {
   return (
@@ -37,6 +38,10 @@ function App() {
                 {/* This will be the dashboard of all roles */}
                 <Route path='/' element={<Home />} />
                 <Route path='profile' element={<UserProfile />} />
+                <Route
+                  path='/user/change-password'
+                  element={<ChangePassword />}
+                />
               </Route>
 
               {/* all the routes allowed for super admin role */}
@@ -46,6 +51,7 @@ function App() {
                   path='/user/create-superadmin'
                   element={<CreateSuperAdmin />}
                 />
+                <Route path='/user/change-role' element={<ChangeRole />} />
               </Route>
 
               {/* all the routes allowed for admin role */}
@@ -63,10 +69,6 @@ function App() {
                 />
                 <Route path='/document/my' element={<MyDocuments />} />
                 <Route path='/documents/:id' element={<DocumentDetails />} />
-                <Route
-                  path='/user/change-password'
-                  element={<ChangePassword />}
-                />
               </Route>
             </Route>
           </Route>

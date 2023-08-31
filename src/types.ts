@@ -40,6 +40,7 @@ export interface IRecordInfo {
 }
 
 export interface IUser {
+  _id: string;
   password: string;
   name: IName;
   phoneNumberList: [string];

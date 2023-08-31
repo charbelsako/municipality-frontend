@@ -18,10 +18,17 @@ const Navbar = () => {
         {auth.email && (
           <>
             <li>
-              <Link to='/document/my' className='link'>
-                My Documents
+              <Link to='/' className='link'>
+                Home
               </Link>
             </li>
+            {auth.role === 'Citizen' || auth.role === 'Admin' ? (
+              <li>
+                <Link to='/document/my' className='link'>
+                  My Documents
+                </Link>
+              </li>
+            ) : null}
             <li>
               <Link to='/profile' className='link'>
                 My profile

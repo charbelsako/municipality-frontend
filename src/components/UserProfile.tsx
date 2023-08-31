@@ -4,35 +4,7 @@ import { SECTS, EMAIL_REGEX } from '../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-
-export interface IUser {
-  password: string;
-  name: IName;
-  phoneNumberList: [string];
-  email: string;
-  role: string[];
-  refreshToken?: string;
-  personalInfo: IPersonalInfo;
-  sex: string;
-  recordInfo: IRecordInfo;
-  dateOfBirth: Date;
-}
-
-export interface IName {
-  firstName: string;
-  fatherName?: string;
-  motherName?: string;
-  lastName: string;
-}
-
-export interface IPersonalInfo {
-  sect: string;
-}
-
-export interface IRecordInfo {
-  sect: string;
-  number: number;
-}
+import { IName } from '../types';
 
 function UserProfile() {
   const [personalSect, setPersonalSect] = useState('');
