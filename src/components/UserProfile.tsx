@@ -3,6 +3,7 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { SECTS, EMAIL_REGEX } from '../constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 export interface IUser {
   password: string;
@@ -98,7 +99,7 @@ function UserProfile() {
 
   return (
     <>
-      <h1 className='text-5xl pt-2 pb-5'>Profile</h1>
+      <h1 className='text-5xl pt-2 pb-5 text-center'>Profile</h1>
       {error && <p className='error-message'>{error}</p>}
       {success && <p className='success'>{success}</p>}
       <form onSubmit={handleSaveUserData}>
@@ -193,6 +194,12 @@ function UserProfile() {
           </button>
         </div>
       </form>
+      <Link
+        to='/user/change-password'
+        className='p-4 link text-blue-700 underline'
+      >
+        Change Password
+      </Link>
     </>
   );
 }

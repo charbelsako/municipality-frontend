@@ -78,22 +78,6 @@ function CreateCitizen() {
         setError('Invalid Entry');
         return;
       }
-      console.log('data', {
-        email,
-        password,
-        phoneNumbers: phone,
-        name: {
-          firstName,
-          motherName,
-          fatherName,
-          lastName,
-        },
-        dateOfBirth,
-        personalSect,
-        recordSect,
-        recordNumber,
-        sex,
-      });
 
       const response = await axios.post('/api/v1/user/signup', {
         email,
@@ -120,7 +104,6 @@ function CreateCitizen() {
     } catch (registerUserError: any) {
       setStatus('');
       if (registerUserError.response) {
-        console.log('error', registerUserError.response.data.error);
         setError(registerUserError.response.data.error);
       } else {
         setError('something went wrong');
@@ -150,7 +133,7 @@ function CreateCitizen() {
         onSubmit={registerUser}
         className='flex flex-col w-[500px] space-y-3 text-left'
       >
-        <label htmlFor='username'>
+        <label htmlFor='email'>
           Email:
           <FontAwesomeIcon
             icon={faCheck}

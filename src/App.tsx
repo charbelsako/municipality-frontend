@@ -14,6 +14,7 @@ import CreateSuperAdmin from './components/CreateSuperAdmin';
 import MyDocuments from './components/MyDocuments';
 import CreateCitizen from './components/CreateCitizen';
 import DocumentDetails from './components/DocumentDetails';
+import ChangePassword from './components/ChangePassword';
 
 function App() {
   return (
@@ -40,9 +41,9 @@ function App() {
 
               {/* all the routes allowed for super admin role */}
               <Route element={<RequireAuth allowedRoles={['Super Admin']} />}>
-                <Route path='/create-admin' element={<CreateAdmin />} />
+                <Route path='/user/create-admin' element={<CreateAdmin />} />
                 <Route
-                  path='/create-superadmin'
+                  path='/user/create-superadmin'
                   element={<CreateSuperAdmin />}
                 />
               </Route>
@@ -56,9 +57,16 @@ function App() {
               <Route
                 element={<RequireAuth allowedRoles={['Citizen', 'Admin']} />}
               >
-                <Route path='create-statement' element={<CreateStatement />} />
-                <Route path='document/my' element={<MyDocuments />} />
+                <Route
+                  path='/documents/create-statement'
+                  element={<CreateStatement />}
+                />
+                <Route path='/document/my' element={<MyDocuments />} />
                 <Route path='/documents/:id' element={<DocumentDetails />} />
+                <Route
+                  path='/user/change-password'
+                  element={<ChangePassword />}
+                />
               </Route>
             </Route>
           </Route>
