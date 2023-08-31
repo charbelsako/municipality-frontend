@@ -44,7 +44,7 @@ const ChangeRole = () => {
         onSubmit={setUserRole}
         className='flex flex-col w-[300px] space-y-5'
       >
-        <input
+        {/* <input
           type='text'
           name='user'
           id='user'
@@ -52,14 +52,23 @@ const ChangeRole = () => {
           placeholder='Enter user id'
           onChange={e => setUser(e.target.value)}
           value={user}
-        />
-        <select name='users' id='users'>
+        /> */}
+        <label htmlFor='users'>Choose User Id</label>
+        <select
+          name='users'
+          id='users'
+          className='input'
+          onChange={e => setUser(e.target.value)}
+        >
           <option value='None'>None</option>
           {users &&
             users.map(value => (
-              <option value={value._id}>{value.name.firstName}</option>
+              <option value={value._id}>
+                {value.email || 'No email was provided'}
+              </option>
             ))}
         </select>
+        <label htmlFor='users'>Select Desired Role</label>
         <select
           name='role'
           id='role'
@@ -71,6 +80,9 @@ const ChangeRole = () => {
           <option value='Admin'>Admin</option>
           <option value='Citizen'>Citizen</option>
         </select>
+        <p className='text-sm'>
+          Double check information before pressing update
+        </p>
         <button className='button'>Update user role</button>
       </form>
     </div>
