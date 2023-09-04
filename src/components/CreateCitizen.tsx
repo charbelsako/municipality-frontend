@@ -79,7 +79,7 @@ function CreateCitizen() {
         return;
       }
 
-      const response = await axios.post('/api/v1/user/signup', {
+      await axios.post('/api/v1/user/signup', {
         email,
         password,
         phoneNumbers: phone,
@@ -95,7 +95,7 @@ function CreateCitizen() {
         recordNumber,
         sex,
       });
-      console.log(response);
+
       setStatus('Successfully created your account');
       setEmail('');
       setPassword('');
