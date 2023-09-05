@@ -22,7 +22,7 @@ const Navbar = () => {
                 Home
               </Link>
             </li>
-            {auth.role === 'Citizen' || auth.role === 'Admin' ? (
+            {auth.role === 'Citizen' ? (
               <li>
                 <Link to='/document/my' className='link'>
                   My Documents
