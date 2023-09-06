@@ -11,16 +11,22 @@ const ManageUsers = () => {
 
   useEffect(() => {
     const getUsers = async () => {
-      const response = await axios.get('/api/v1/user/all');
-      setUsers(response.data.data);
+      try {
+        const response = await axios.get('/api/v1/user/all');
+        setUsers(response.data.data);
+      } catch (err: any) {
+        if (err?.response?.data?.error) {
+          setError(err.response.data.error);
+        } else {
+          setError('Something went wrong');
+        }
+      }
     };
     getUsers();
   }, [axios]);
 
   const deleteUser = async (id: string) => {
     try {
-      console.log('Deleting user');
-      console.log(id);
       await axios.delete(`/api/v1/user/${id}/delete`);
 
       setError('');
@@ -33,8 +39,6 @@ const ManageUsers = () => {
 
   const enableUser = async (id: string) => {
     try {
-      console.log('Enable user');
-      console.log(id);
       await axios.patch(`/api/v1/user/${id}/enable`);
 
       setError('');
@@ -62,10 +66,14 @@ const ManageUsers = () => {
         </thead>
         <tbody>
           {users.map(user => (
-            <tr>
+            <tr key={user._id}>
               <td className='border border-black'>{user.email}</td>
               <td className='border border-black'>
-                {user.isDeleted ? 'True' : 'False'}
+                {user.isDeleted ? (
+                  <span className='text-red-600'>Deleted</span>
+                ) : (
+                  <span className='text-green-600'>Enabled</span>
+                )}
               </td>
               <td className='border border-black'>
                 {!user.isDeleted ? (
