@@ -11,7 +11,7 @@ import {
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { EMAIL_REGEX, PASSWORD_REGEX, SECTS, SEXES } from '../constants';
+import { EMAIL_REGEX, PASSWORD_REGEX, ROLES, SECTS, SEXES } from '../constants';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import DatePicker from 'react-datepicker';
 
@@ -39,6 +39,8 @@ function CreateAdmin() {
   const [recordNumber, setRecordNumber] = useState<string>();
   const [sex, setSex] = useState<string>('');
   const [dateOfBirth, setDateOfBirth] = useState<any>();
+
+  const [role, setRole] = useState('');
 
   const [fatherName, setFatherName] = useState<string>();
   const [lastName, setLastName] = useState<string>();
@@ -75,7 +77,7 @@ function CreateAdmin() {
         setError('Invalid Entry');
         return;
       }
-      const response = await axios.post('/api/v1/user/create-admin', {
+      await axios.post('/api/v1/user/create-admin', {
         email,
         password,
         phoneNumbers: phone,
@@ -90,6 +92,7 @@ function CreateAdmin() {
         recordSect,
         recordNumber,
         sex,
+        role,
       });
 
       setEmail('');
@@ -356,6 +359,14 @@ function CreateAdmin() {
           onChange={date => setDateOfBirth(date)}
           className='input w-[100%] '
         />
+
+        <label htmlFor='role'>Role</label>
+        <select name='role' id='role' onChange={e => setRole(e.target.value)}>
+          <option value='None'>None</option>
+          {Object.values(ROLES).map(role => (
+            <option value={role}>{role}</option>
+          ))}
+        </select>
 
         <button
           disabled={!validEmail || !validPassword || !isMatch ? true : false}

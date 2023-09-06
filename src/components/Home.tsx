@@ -17,8 +17,8 @@ const Home = () => {
       ) : null}
 
       {auth.role === 'Admin' ? (
-        <Link to='/user/create-admin' className='link text-blue-500 underline'>
-          create statement
+        <Link to='/user/manage-users' className='link text-blue-500 underline'>
+          Manager user accounts
         </Link>
       ) : null}
 

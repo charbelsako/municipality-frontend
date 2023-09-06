@@ -1,6 +1,8 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { IUser } from '../types';
+import Select from 'react-select';
+import { ROLES } from '../constants';
 
 // submit button
 const ChangeRole = () => {
@@ -12,6 +14,10 @@ const ChangeRole = () => {
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
 
+  const options = useMemo(() => {
+    return [{ value: 'None', label: 'None' }];
+  }, []);
+
   useEffect(() => {
     const getUsers = async () => {
       const response = await axios.get('/api/v1/user/all');
@@ -19,6 +25,12 @@ const ChangeRole = () => {
     };
     getUsers();
   }, [axios]);
+
+  useEffect(() => {
+    users?.forEach(user => {
+      options.push({ value: user.email, label: user.email });
+    });
+  }, [options, users]);
 
   const setUserRole = async (e: FormEvent) => {
     try {
@@ -44,30 +56,9 @@ const ChangeRole = () => {
         onSubmit={setUserRole}
         className='flex flex-col w-[300px] space-y-5'
       >
-        {/* <input
-          type='text'
-          name='user'
-          id='user'
-          className='input'
-          placeholder='Enter user id'
-          onChange={e => setUser(e.target.value)}
-          value={user}
-        /> */}
         <label htmlFor='users'>Choose User Id</label>
-        <select
-          name='users'
-          id='users'
-          className='input'
-          onChange={e => setUser(e.target.value)}
-        >
-          <option value='None'>None</option>
-          {users &&
-            users.map(value => (
-              <option value={value._id}>
-                {value.email || 'No email was provided'}
-              </option>
-            ))}
-        </select>
+        <Select options={options} onChange={e => e && setUser(e.value)} />
+
         <label htmlFor='users'>Select Desired Role</label>
         <select
           name='role'
@@ -77,8 +68,11 @@ const ChangeRole = () => {
           value={role}
         >
           <option value='None'>None</option>
-          <option value='Admin'>Admin</option>
-          <option value='Citizen'>Citizen</option>
+          {Object.values(ROLES).map(role => (
+            <option value={role} key={role}>
+              {role}
+            </option>
+          ))}
         </select>
         <p className='text-sm'>
           Double check information before pressing update
