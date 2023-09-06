@@ -22,10 +22,13 @@
     @apply border border-black p-1;
   }
   .button {
-    @apply border bg-blue-400 rounded p-1;
+    @apply border bg-blue-400 rounded p-2;
   }
   .button-danger {
-    @apply border bg-red-400 rounded p-1;
+    @apply border bg-red-400 rounded p-2;
+  }
+  .button-success {
+    @apply border bg-green-400 rounded p-2;
   }
   .disabled-button {
     @apply bg-gray-200 rounded p-1;
