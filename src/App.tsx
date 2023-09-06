@@ -16,6 +16,7 @@ import CreateCitizen from './components/CreateCitizen';
 import DocumentDetails from './components/DocumentDetails';
 import ChangePassword from './components/ChangePassword';
 import ChangeRole from './components/ChangeRole';
+import ManageUsers from './components/ManageUsers';
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
               {/* all the routes allowed for admin role */}
               <Route element={<RequireAuth allowedRoles={['Admin']} />}>
                 <Route path='protected' element={<Protected />} />
+                <Route path='/user/manage-users' element={<ManageUsers />} />
               </Route>
 
               {/* all the routes allowed for citizen role */}

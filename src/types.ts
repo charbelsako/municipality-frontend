@@ -51,4 +51,5 @@ export interface IUser {
   sex: string;
   recordInfo: IRecordInfo;
   dateOfBirth: Date;
+  isDeleted: Boolean;
 }
