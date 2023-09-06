@@ -56,7 +56,7 @@ function UserProfile() {
         name,
         email,
         personalInfo: { sect: personalSect },
-        recordInfo: { sect: personalSect, number: recordNumber },
+        recordInfo: { sect: recordSect, number: recordNumber },
         sex,
       };
 
