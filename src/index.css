@@ -31,7 +31,7 @@
     @apply border bg-green-400 rounded p-2;
   }
   .disabled-button {
-    @apply bg-gray-200 rounded p-1;
+    @apply border bg-gray-200 rounded p-2;
   }
   .hide {
     @apply hidden;

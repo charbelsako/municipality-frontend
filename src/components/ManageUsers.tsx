@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { IUser } from '../types';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const ManageUsers = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -9,11 +11,21 @@ const ManageUsers = () => {
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
 
+  const [page, setPage] = useState(1);
+  const [totalDocs, setTotalDocs] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [hasPrevPage, setHasPrevPage] = useState(false);
+  const [hasNextPage, setHasNextPage] = useState(false);
+
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const response = await axios.get('/api/v1/user/all');
-        setUsers(response.data.data);
+        const response = await axios.get(`/api/v1/user/all?page=${page}`);
+        setUsers(response.data.data.docs);
+        setTotalDocs(response.data.data.totalDocs);
+        setTotalPages(response.data.data.totalPages);
+        setHasNextPage(response.data.data.hasNextPage);
+        setHasPrevPage(response.data.data.hasPrevPage);
       } catch (err: any) {
         if (err?.response?.data?.error) {
           setError(err.response.data.error);
@@ -23,7 +35,7 @@ const ManageUsers = () => {
       }
     };
     getUsers();
-  }, [axios]);
+  }, [axios, page]);
 
   const deleteUser = async (id: string) => {
     try {
@@ -49,8 +61,33 @@ const ManageUsers = () => {
     }
   };
 
+  const prevPage = () => {
+    setPage(prevState => (prevState - 1 < 1 ? 1 : prevState - 1));
+  };
+
+  const nextPage = () => {
+    setPage(prevState => prevState + 1);
+  };
+
   return (
     <div className='flex justify-center flex-col items-center'>
+      <div className='flex items-center justify-right'>
+        <button
+          disabled={!hasPrevPage}
+          className={!hasPrevPage ? 'disabled-button' : 'button'}
+          onClick={prevPage}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <span className='m-3'>{page}</span>
+        <button
+          className={!hasNextPage ? 'disabled-button' : 'button'}
+          onClick={nextPage}
+          disabled={!hasNextPage}
+        >
+          <FontAwesomeIcon icon={faArrowRight} />
+        </button>
+      </div>
       {success && <p className='success m-7'>{success}</p>}
       {error && <p className='error-message m-7'>{error}</p>}
       <table
@@ -96,6 +133,10 @@ const ManageUsers = () => {
           ))}
         </tbody>
       </table>
+      <div className='w-[100%] pl-5 pt-5'>
+        <p>Total docs: {totalDocs}</p>
+        <p>Total pages: {totalPages}</p>
+      </div>
     </div>
   );
 };
