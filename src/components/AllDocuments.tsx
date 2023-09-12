@@ -19,7 +19,7 @@ const MyDocuments = () => {
 
   useEffect(() => {
     const getMyDocuments = async () => {
-      const response = await axios.get(`/api/v1/documents/my?page=${page}`);
+      const response = await axios.get(`/api/v1/documents/all?page=${page}`);
       setDocuments(response.data.data.docs);
       setTotalDocs(response.data.data.totalDocs);
       setTotalPages(response.data.data.totalPages);
@@ -39,7 +39,7 @@ const MyDocuments = () => {
   };
 
   return (
-    <div className='flex justify-center mt-10'>
+    <div className='flex flex-col items-center justify-center'>
       <div className='flex items-center justify-right'>
         <button
           disabled={!hasPrevPage}
@@ -62,13 +62,14 @@ const MyDocuments = () => {
       ) : documents.length === 0 ? (
         <p className='text-3xl'>No documents to show</p>
       ) : (
-        <table className='border border-black w-[500px]'>
+        <table className='border border-black w-[100%] text-center'>
           <thead>
             <tr>
               <th className='border border-black'>ID</th>
               <th className='border border-black'>Status</th>
               <th className='border border-black'>Request For</th>
               <th className='border border-black'>Type</th>
+              <th className='border border-black'>Action</th>
             </tr>
           </thead>
           <tbody className='border border-black'>
@@ -93,12 +94,16 @@ const MyDocuments = () => {
                 <td className='p-3 border border-black'>
                   <h1>{doc.type}</h1>
                 </td>
+                <td>
+                  <Link className='button' to={`/documents/${doc._id}/process`}>
+                    Process doc
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
-
       <div className='w-[100%] pl-5 pt-5'>
         <p>Total docs: {totalDocs}</p>
         <p>Total pages: {totalPages}</p>

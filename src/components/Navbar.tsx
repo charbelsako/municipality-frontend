@@ -24,11 +24,19 @@ const Navbar = () => {
             </li>
             {auth.role === 'Citizen' ? (
               <li>
-                <Link to='/document/my' className='link'>
+                <Link to='/documents/my' className='link'>
                   My Documents
                 </Link>
               </li>
             ) : null}
+            {auth.role === 'Admin' ? (
+              <li>
+                <Link to='/documents/all' className='link'>
+                  All Documents
+                </Link>
+              </li>
+            ) : null}
+
             <li>
               <Link to='/profile' className='link'>
                 My profile

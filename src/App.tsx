@@ -12,6 +12,7 @@ import PersistLogin from './components/PersistLogin';
 import CreateAdmin from './components/CreateAdmin';
 import CreateSuperAdmin from './components/CreateSuperAdmin';
 import MyDocuments from './components/MyDocuments';
+import AllDocuments from './components/AllDocuments';
 import CreateCitizen from './components/CreateCitizen';
 import DocumentDetails from './components/DocumentDetails';
 import ChangePassword from './components/ChangePassword';
@@ -59,6 +60,7 @@ function App() {
               <Route element={<RequireAuth allowedRoles={['Admin']} />}>
                 <Route path='protected' element={<Protected />} />
                 <Route path='/user/manage-users' element={<ManageUsers />} />
+                <Route path='/documents/all' element={<AllDocuments />} />
               </Route>
 
               {/* all the routes allowed for citizen role */}
@@ -69,7 +71,7 @@ function App() {
                   path='/documents/create-statement'
                   element={<CreateStatement />}
                 />
-                <Route path='/document/my' element={<MyDocuments />} />
+                <Route path='/documents/my' element={<MyDocuments />} />
                 <Route path='/documents/:id' element={<DocumentDetails />} />
               </Route>
             </Route>
