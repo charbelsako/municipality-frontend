@@ -18,6 +18,7 @@ import DocumentDetails from './components/DocumentDetails';
 import ChangePassword from './components/ChangePassword';
 import ChangeRole from './components/ChangeRole';
 import ManageUsers from './components/ManageUsers';
+import ProcessDocument from './components/ProcessDocument';
 
 function App() {
   return (
@@ -61,6 +62,10 @@ function App() {
                 <Route path='protected' element={<Protected />} />
                 <Route path='/user/manage-users' element={<ManageUsers />} />
                 <Route path='/documents/all' element={<AllDocuments />} />
+                <Route
+                  path='/documents/:id/process'
+                  element={<ProcessDocument />}
+                />
               </Route>
 
               {/* all the routes allowed for citizen role */}

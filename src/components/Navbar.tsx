@@ -43,7 +43,9 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <button onClick={signOut}>Logout</button>
+              <button onClick={signOut} className='link'>
+                Logout
+              </button>
             </li>
           </>
         )}
